@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Exam & Problem</title>
+    <style>
+      #jb-container {
+        margin: 10px auto;
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-header {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-content {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-maincontent {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-sidebar {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-footer {
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      @media ( min-width: 481px ) {
+        #jb-container {
+          width: 940px;
+        }
+        #jb-content {
+          width: 580px;
+          float: left;
+        }
+        #jb-maincontent {
+          width: 580px;
+          float: left;
+        }
+        #jb-sidebar {
+          width: 260px;
+          float: right;
+        }
+        #jb-footer {
+          clear: both;
+        }
+      }
+</style>
+</head>
+
+
+
+<body>
+    <div id="jb-container">
+        <div id="jb-header">
+            <h1>Make Exam or Problem Page</h1>
+        </div>
+        <div id="jb-maincontent">
+            <h2>Click Exam to make Problem</h2>
+            {% if latest_exam_list %}
+            <ul>
+                {%  for exam in latest_exam_list %}
+                    <li><a href="{% url 'polls:problem' exam.id %}">{{  exam.exam_text }}</a></li>
+                {%  endfor  %}
+            </ul>
+            {% else %}
+                <p>No exam are available.</p>
+            {% endif %}
+        </div>
+        
+
+        <div id="jb-sidebar">
+            <a href="{% url 'polls:index'%}">Main Page</a>
+        </div>
+        <div id="jb-content">
+            <h2>Make Exam</h2>
+            <form action="{%  url 'polls:addProblem' 0 %}" method="post">
+                {% csrf_token %}
+                <p>Exam name <input type='text' name='ename' ><input type="submit" value="Submit"><br></p>
+            </form>
+        </div>
+        
+        
+
+        <div id="jb-footer">
+            <p>django exam project made bj CJH</p>
+        </div>
+        
+        
+    </div>
+</body>
+
+
+
+

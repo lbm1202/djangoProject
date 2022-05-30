@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Exam Sharing HUB</title>
+    <style>
+      #jb-container {
+        margin: 10px auto;
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-header {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-content {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-maincontent {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-sidebar {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-footer {
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      @media ( min-width: 481px ) {
+        #jb-container {
+          width: 940px;
+        }
+        #jb-content {
+          width: 580px;
+          float: left;
+        }
+        #jb-maincontent {
+          width: 580px;
+          float: left;
+        }
+        #jb-sidebar {
+          width: 260px;
+          float: right;
+        }
+        #jb-footer {
+          clear: both;
+        }
+      }
+</style>
+</head>
+
+<body>
+    <div id="jb-container">
+        <div id="jb-header">
+            <h1>Exam sharing HUB</h1>
+        </div>
+        <div id="jb-content">
+            <p>Hello! This page is example of django project.</p>
+        </div>
+        {% if latest_exam_list %}
+            <div id="jb-sidebar">
+            <h4>
+                exam list
+            </h4>
+                {%  for exam in latest_exam_list %}
+        
+                    {{ exam.exam_text }}<br>
+                    - <a href="{% url 'polls:detail' exam.id %}">Take exam</a><br>
+                    - <a href="{% url 'polls:statistic' exam.id %}">statistic</a><br><br>
+                {%  endfor  %}
+            </div>
+        {% else %}
+            <div id="jb-sidebar">
+                <p>No Exam are available.</p>
+            </div>
+            
+        {% endif %}
+            
+        <div id="jb-maincontent">
+            <a href="{% url 'polls:add'%}">Add Exam & Problem</a>
+        </div>
+
+        <div id="jb-footer">
+            django exam project made bj CJH
+        </div>
+
+        
+    </div>
+
+
+
+
+
+    
+
+
+</body>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Take Exam</title>
+    <style>
+      #jb-container {
+        margin: 10px auto;
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-header {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-content {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-maincontent {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-sidebar {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-footer {
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      @media ( min-width: 481px ) {
+        #jb-container {
+          width: 940px;
+        }
+        #jb-content {
+          width: 580px;
+          float: left;
+        }
+        #jb-maincontent {
+          width: 580px;
+          float: left;
+        }
+        #jb-sidebar {
+          width: 260px;
+          float: right;
+        }
+        #jb-footer {
+          clear: both;
+        }
+      }
+</style>
+</head>
+
+<body>
+
+<div id="jb-container">
+    <div id="jb-header">
+        <h1>{{ exam.exam_text }}</h1>
+        {% if error_message %}<p style="color:#FF0000"><strong>{{  error_message }}</strong></p>{% endif %}
+    </div>
+    
+    <form action="{%  url 'polls:score' exam.id %}" method="post">
+        {% csrf_token %}
+
+        {% for question in exam.question_set.all %}
+            <div id="jb-maincontent">
+                <h3>{{ question.question_text|linebreaks }}</h3>
+                <h5>{{ question.question_contents|linebreaks }}</h5>
+                <h3>___________________________</h3>
+
+                {% for choice in question.choice_set.all %}
+                    <input type="radio" name="{{question.question_text}}" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <div id="jb-maincontent">
+            <p><strong>Notice!!!
+                if you finish the exam, click "Submit" Button</strong></p>
+        </div>
+        <div id="jb-content">
+            <input type="submit" value="Submit"><br><br>
+            <a href="{% url 'polls:index'%}">Main page</a>
+        </div>
+        <div id="jb-footer">
+            <p>django exam project made bj CJH</p>
+        </div>
+    
+    </form>
+
+    
+    
+
+</div>
+
+</body>
+
+
+

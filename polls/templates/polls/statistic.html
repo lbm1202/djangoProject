@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Exam Statistic</title>
+    <style>
+      #jb-container {
+        margin: 10px auto;
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-header {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-content {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-maincontent {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-sidebar {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-footer {
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      @media ( min-width: 481px ) {
+        #jb-container {
+          width: 940px;
+        }
+        #jb-content {
+          width: 580px;
+          float: left;
+        }
+        #jb-maincontent {
+          width: 580px;
+          float: left;
+        }
+        #jb-sidebar {
+          width: 260px;
+          float: right;
+        }
+        #jb-footer {
+          clear: both;
+        }
+      }
+</style>
+</head>
+
+<body>
+    <div id="jb-container">
+        <div id="jb-header">
+            <h1>{{"Statistic of "}} {{ exam.exam_text }} </h1>
+        </div>
+        
+
+        {% load index %}
+        
+        {% for question in exam.question_set.all %}   
+        
+            <div id="jb-maincontent">
+                <h3> {{'Question : '}}{{ question.question_text |linebreaks}}</h3>
+                <h5>{{ question.question_contents|linebreaks }}</h5>
+                <h3>___________________________</h3>
+                {% for choice in question.choice_set.all %}
+                    <li>{{'choice '}}{{choice.choice_text}} -- {{choice.votes}}
+                        {% if choice.answer%}
+                            {{"<- answer"}}
+                        {% else %}
+                            
+                        {% endif %}
+                    </li>
+                {% endfor %}
+
+                correct rate <strong>{{static_list|index:forloop.counter0}} %</strong>  <br>
+            </div>
+        {% endfor %}  
+
+        <div id="jb-maincontent">
+            <a href="{% url 'polls:index'%}">Main Page</a>
+        </div>
+
+        <div id="jb-footer">
+            django exam project made bj CJH
+        </div>
+    </div>
+
+    
+</body>

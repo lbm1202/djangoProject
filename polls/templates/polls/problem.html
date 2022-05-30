@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Problem</title>
+    <style>
+      #jb-container {
+        margin: 10px auto;
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-header {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-content {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-maincontent {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-sidebar {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jb-footer {
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      @media ( min-width: 481px ) {
+        #jb-container {
+          width: 940px;
+        }
+        #jb-content {
+          width: 580px;
+          float: left;
+        }
+        #jb-maincontent {
+          width: 580px;
+          float: left;
+        }
+        #jb-sidebar {
+          width: 260px;
+          float: right;
+        }
+        #jb-footer {
+          clear: both;
+        }
+      }
+</style>
+</head>
+
+<body>
+    <div id="jb-container">
+        <div id="jb-header">
+            <h1>Make Problem</h1>
+            {% if error_message %}<p style="color:#FF0000"><strong>{{  error_message }}</strong></p>{% endif %}
+        </div>
+        <div id="jb-maincontent">
+            <form action="{%  url 'polls:addProblem' exam.id %}" method="post">
+                {% csrf_token %}
+                <p>Problem name <br><textarea id='qname' name='qname' rows='1' cols='40'></textarea></p>
+                <p>Problem contents <br><textarea id='qcontents' name='qcontents' rows='3' cols='40'></textarea></p>
+                <div id="t_space">
+                <p>add choice <input type="button" value="add" onclick='add_textbox()'><br></p> 
+                
+                </div>
+        
+                <input type="submit" value="Submit"><br>
+                <a href="{% url 'polls:index'%}">Main Page</a>
+            </form>
+        </div>
+
+        <div id="jb-footer">
+            <p>django exam project made bj CJH</p>
+        </div>
+        
+    
+        <script>
+            function add_textbox(){
+                document.getElementById("t_space").innerHTML +=
+                "isAnswer? <input type='radio' name='choice' >Choice name <input type='text' name='choice' > <br>";
+            }
+        </script>
+    </div>
+
+    
+
+</body>
+
+
+
+
